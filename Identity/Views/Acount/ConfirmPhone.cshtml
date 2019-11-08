@@ -1,0 +1,24 @@
+﻿@model  Identity.DTOs.Account.Confirmphone
+@{
+    ViewData["Title"] = "ConfirmPhone";
+}
+
+<h2>ConfirmPhone</h2>
+<div class="container">
+    <div class="col-md-6">
+
+        <form asp-route="PostVerifyPhone" asp-route-returnTo="@Model.Returnto">
+
+            <div asp-validation-summary="All"></div>
+            <input value="@Model.Username" type="hidden" name="username" />
+            <div class="form-group">
+                <input typeof="text" name="token" />
+            </div>
+
+            <hr />
+
+            <button type="submit" class="btn btn-success">Verify Code</button>
+
+        </form>
+    </div>
+</div>

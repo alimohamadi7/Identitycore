@@ -1,0 +1,33 @@
+﻿@model ErrorViewModel
+@{
+    ViewData["Title"] = "Error";
+}
+
+<h1 class="text-danger">خطا</h1>
+<h2 class="text-danger">خطایی رخ داده است.</h2>
+
+@*@if (Model.ShowRequestId)
+{
+    <p>
+        <strong>Request ID:</strong> <code>@Model.RequestId</code>
+    </p>
+}*@
+
+<h3>خطا</h3>
+<p>
+    متاسفانه <strong>خطایی </strong> رخ داده است
+</p>
+<p>
+    
+    
+        @if (Model.Errordescription.Any() && Model.Errordescription != null)
+        {
+            @foreach (var item in Model.Errordescription)
+            {
+                <strong>@item.Description.ToString()</strong>
+            }
+        }
+  
+
+
+</p>

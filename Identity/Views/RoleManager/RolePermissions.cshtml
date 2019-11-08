@@ -1,0 +1,57 @@
+﻿@using Identity.Services
+@model Identity.DTOs.Manager.RolePermission
+<br />
+
+<div class="container">
+
+    <div class="col-md-6">
+
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+        <form asp-route="PostRolePermissions">
+
+            <input asp-for="RoleId" type="hidden" value="@Model.Role.Id" />
+
+            <ul class="list-group">
+
+                @foreach (var action in Model.Actions)
+                {
+                    var displayName = string.IsNullOrEmpty(action.ActionDisplayName) ? $"{action.ControllerName}:{action.ActionName}" : action.ActionDisplayName;
+
+                    var isChecked = Model.Role.Claims.Any(x => x.ClaimType == ConstantPolicies.DynamicPermission && x.ClaimValue == action.Key);
+
+                    var givenOnClaim = Model.Role
+                        .Claims.SingleOrDefault(x => x.ClaimType == ConstantPolicies.DynamicPermission && x.ClaimValue == action.Key);
+
+                    <li class="list-group-item">
+                        <input type="checkbox" name="Keys" value="@action.Key" @(isChecked ? "checked" : "") />
+                        @displayName
+                        /
+                        @if (givenOnClaim != null)
+                        {
+                            <b>
+                                given on: @givenOnClaim.GivenOn
+                            </b>
+                        }
+                    </li>
+                }
+
+            </ul>
+
+
+            <hr />
+
+            <button type="submit" class="btn btn-success">Update</button>
+
+        </form>
+
+    </div>
+</div>
+
+@section Scripts
+{
+
+    <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>
+}
+
